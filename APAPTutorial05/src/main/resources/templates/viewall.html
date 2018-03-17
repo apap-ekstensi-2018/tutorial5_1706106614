@@ -1,23 +1,34 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>View All Students</title>
-    </head>
+<head th:replace="fragments/fragment :: topfragment(title='View All Students')"> 
+</head>
     <body>
-    
+	    <div th:replace="fragments/fragment :: header"></div>
         <h1>All Students</h1>
-        
-    	<div th:each="student,iterationStatus: ${students}">
-            <h3 th:text="'No. ' + ${iterationStatus.count}">No. 1</h3>
-	       	<h3 th:text="'NPM = ' + ${student.npm}">Student NPM</h3>
-	       	<h3 th:text="'Name = ' + ${student.name}">Student Name</h3>
-	       	<h3 th:text="'GPA = ' + ${student.gpa}">Student GPA</h3>
-	       	<h3 th:if="${student.gpa>=3.49}">Cum Laude!</h3>
-<h3 th:unless="${student.gpa>=3.49}">Sangat Memuaskan!</h3>
-	       	<a th:href="'/student/delete/' + ${student.npm}" > Delete Data</a><br/>
-	       	<a th:href="'/student/update/' + ${student.npm}" > Update Data</a><br/>
-	       	<hr/>
-       	</div>
-
+        <table id="studentTable" style="width:100%">
+        	<thead>
+        	    <tr>
+	        		<th>No.</th>
+	        		<th>NPM</th>
+	        		<th>Name</th>
+	        		<th>GPA</th>
+	        		<th>Status</th>
+	        		<th></th>
+	        		<th></th>
+	        	</tr>
+        	</thead>
+        	<tbody>
+        		<tr th:each="student,iterationStatus: ${students}">
+        			<td th:text="${iterationStatus.count}"></td>
+        			<td th:text="${student.npm}"></td>
+        			<td th:text="${student.name}"></td>
+        			<td th:text="${student.gpa}"></td>
+        			<td th:text="${student.gpa>=3.49 ? 'Cum Laude!' : 'Sangat Memuaskan!'}"></td>
+        			<td><a th:href="'/student/delete/' + ${student.npm}">Delete Data</a></td>
+        			<td><a th:href="'/student/update/' + ${student.npm}">Update Data</a></td>
+        		</tr>
+        	</tbody>
+        </table>
+       	<div th:replace="fragments/fragment :: footer"></div>
     </body>
 </html>
